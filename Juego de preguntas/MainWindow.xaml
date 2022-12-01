@@ -9,17 +9,12 @@
         Title="Juego de preguntas" Height="550" Width="900">
     <Window.Resources>
         <DataTemplate x:Key="ListaPreguntas">
-            <Border BorderThickness="1"  BorderBrush="Black" Margin="10" Width="250" Background="AliceBlue">
-                <Border.Effect>
-                    <DropShadowEffect></DropShadowEffect>
-                </Border.Effect>
-                <StackPanel Margin="10">
-                    <Viewbox Height="50">
-                        <TextBlock Text="{Binding Path=Comida}" Style="{StaticResource Fuente}"></TextBlock>
-                    </Viewbox>
-                    <Image Source="{Binding Path=Imagen}" Width="200" Height="200" Stretch="UniformToFill"></Image>
-                </StackPanel>
-            </Border>
+            <StackPanel Margin="10">
+                <Image Source="{Binding Path=Imagen}" Width="80" Stretch="UniformToFill"></Image>
+                <Viewbox Height="50">
+                    <TextBlock Text="{Binding Path=Comida}"></TextBlock>
+                </Viewbox>
+            </StackPanel>
         </DataTemplate>
     </Window.Resources>
     
