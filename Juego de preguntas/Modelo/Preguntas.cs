@@ -49,6 +49,8 @@ namespace Juego_de_preguntas.Modelo
             set { SetProperty(ref categoria, value); }
         }
 
+        public Preguntas(){ }
+
         public Preguntas(string pregunta, string respuesta, string imagen, string dificultad, string categoria)
         {
             this.Pregunta = pregunta;

@@ -9,11 +9,9 @@
         Title="Juego de preguntas" Height="550" Width="900">
     <Window.Resources>
         <DataTemplate x:Key="ListaPreguntas">
-            <StackPanel Margin="10">
-                <Image Source="{Binding Path=Imagen}" Width="80" Stretch="UniformToFill"></Image>
-                <Viewbox Height="50">
-                    <TextBlock Text="{Binding Path=Comida}"></TextBlock>
-                </Viewbox>
+            <StackPanel Margin="10" Orientation="Vertical">
+                <Image Source="{Binding Path=Imagen}" Width="80" Height="80" Stretch="UniformToFill"></Image>
+                <TextBlock Text="{Binding Path=Pregunta}" HorizontalAlignment="Center"></TextBlock>
             </StackPanel>
         </DataTemplate>
     </Window.Resources>
@@ -63,37 +61,37 @@
                 <DockPanel>
                     <DockPanel DockPanel.Dock="Right" Margin="10" Background="#0099BA">
                         <StackPanel DockPanel.Dock="Top">
-                            <Button Margin="10" Width="150">Añadir pregunta</Button>
-                            <Button Margin="10" Width="150">Limpiar formulario</Button>
+                            <Button Margin="10" Width="150" Click="AñadePregunta_Button">Añadir pregunta</Button>
+                            <Button Margin="10" Width="150" Click="LimpiarFormulario_Button">Limpiar formulario</Button>
                         </StackPanel>
-                        <Button Margin="10" Width="150" VerticalAlignment="Bottom">Examinar</Button>
+                        <Button Margin="10" Width="150" VerticalAlignment="Bottom" Click="Examinar_Button">Examinar</Button>
                     </DockPanel>
                     <StackPanel Orientation="Vertical">
                         <WrapPanel HorizontalAlignment="Center">
                             <Border BorderThickness="1" BorderBrush="Black" CornerRadius="3" Margin="20,10,0,0">
-                                <Image Source="assets/questions.png" Width="300"></Image>
+                                <Image Source="{Binding Path=Text, ElementName=imagenUrl_TextBox}" Width="300"></Image>
                             </Border>
                         </WrapPanel>
                         <StackPanel Orientation="Horizontal" Margin="10">
                             <TextBlock Width="100">Pregunta</TextBlock>
-                            <TextBox Width="400"></TextBox>
+                            <TextBox Width="400" Text="{Binding Path=NuevaPregunta.Pregunta}"></TextBox>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="10">
                             <TextBlock Width="100">Respuesta</TextBlock>
-                            <TextBox Width="400"></TextBox>
+                            <TextBox Width="400" Text="{Binding Path=NuevaPregunta.Respuesta}"></TextBox>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="10">
                             <TextBlock Width="100">Imagen</TextBlock>
-                            <TextBox Width="400"></TextBox>
+                            <TextBox x:Name="imagenUrl_TextBox" Width="400" IsEnabled="False" Text="{Binding Path=NuevaPregunta.Imagen}"></TextBox>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="10">
                             <StackPanel Orientation="Horizontal" Margin="0,0,60,0">
                                 <TextBlock Margin="0,0,30,0">Nivel de dificultad</TextBlock>
-                                <ComboBox></ComboBox>
+                                <ComboBox Width="150" ItemsSource="{Binding Dificultades}" SelectedItem="{Binding Path=NuevaPregunta.Dificultad}"></ComboBox>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Margin="0,0,30,0">Categoría</TextBlock>
-                                <ComboBox></ComboBox>
+                                <ComboBox Width="150" ItemsSource="{Binding Categorias}" SelectedItem="{Binding Path=NuevaPregunta.Categoria}"></ComboBox>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
@@ -111,7 +109,7 @@
                     </DockPanel>
                     <StackPanel>
                         <Border Margin="10" BorderBrush="Black" BorderThickness="1">
-                            <ListBox ItemTemplate="{StaticResource ListaPreguntas}" ItemsSource="{Binding Path=Pregunta}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                            <ListBox ItemTemplate="{StaticResource ListaPreguntas}" ItemsSource="{Binding Path=Preguntas}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                                 <ListBox.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <WrapPanel></WrapPanel>
