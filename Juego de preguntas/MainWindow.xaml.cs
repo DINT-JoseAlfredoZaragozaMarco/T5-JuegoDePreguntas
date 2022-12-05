@@ -38,7 +38,7 @@ namespace Juego_de_preguntas
 
         private void AñadePregunta_Button(object sender, RoutedEventArgs e)
         {
-            vm.AñadePregunta();
+            vm.AñadePregunta(imagenUrl_TextBox.Text);
         }
 
         private void LimpiarFormulario_Button(object sender, RoutedEventArgs e)

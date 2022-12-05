@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace Juego_de_preguntas.VistasModelo
 {
@@ -80,9 +81,11 @@ namespace Juego_de_preguntas.VistasModelo
             }
         }
 
-        public void AñadePregunta()
+        public void AñadePregunta(string url)
         {
+            nuevaPregunta.Imagen = url;
             preguntas.Add(nuevaPregunta);
+            nuevaPregunta = new Preguntas();
         }
     }
 }
