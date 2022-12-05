@@ -82,7 +82,7 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="10">
                             <TextBlock Width="100">Imagen</TextBlock>
-                            <TextBox x:Name="imagenUrl_TextBox" Width="400" IsEnabled="False"></TextBox>
+                            <TextBox x:Name="imagenUrl_TextBox" Width="400" IsEnabled="False" Text="{Binding Path=NuevaPregunta.Imagen}"></TextBox>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="10">
                             <StackPanel Orientation="Horizontal" Margin="0,0,60,0">
@@ -101,11 +101,11 @@
                 <DockPanel>
                     <DockPanel DockPanel.Dock="Right" Margin="10" Background="#0099BA">
                         <StackPanel DockPanel.Dock="Top">
-                            <Button Margin="10" Width="150">Cargar de JSON</Button>
-                            <Button Margin="10" Width="150">Guardar en JSON</Button>
-                            <Button Margin="10" Width="150">Eliminar pregunta</Button>
+                            <Button Margin="10" Width="150" Click="CargarJSON_Button">Cargar de JSON</Button>
+                            <Button Margin="10" Width="150" Click="GuardarEnJSON_Button">Guardar en JSON</Button>
+                            <Button Margin="10" Width="150" Click="EliminarPregunta_Button">Eliminar pregunta</Button>
                         </StackPanel>
-                        <Button Margin="10" Width="150" VerticalAlignment="Bottom">Examinar</Button>
+                        <Button Margin="10" Width="150" VerticalAlignment="Bottom" Click="Examinar_Button">Examinar</Button>
                     </DockPanel>
                     <StackPanel>
                         <Border Margin="10" BorderBrush="Black" BorderThickness="1">

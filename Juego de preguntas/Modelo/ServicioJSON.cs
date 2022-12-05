@@ -11,17 +11,17 @@ namespace Juego_de_preguntas.Modelo
 {
     class ServicioJSON
     {
-        public void GuardarPreguntasEnJSON(ObservableCollection<Preguntas> preguntas)
+        public void GuardarPreguntasEnJSON(ObservableCollection<Preguntas> preguntas, string ruta)
         {
             string personasJson = JsonConvert.SerializeObject(preguntas);
-            File.WriteAllText("./datos/personas.json", personasJson);
+            File.WriteAllText(ruta, personasJson);
         }
 
-        public ObservableCollection<Preguntas> CargarPreguntasDeJSON()
+        public ObservableCollection<Preguntas> CargarPreguntasDeJSON(string ruta)
         {
             ObservableCollection<Preguntas> preguntas = new ObservableCollection<Preguntas>();
 
-            string personasJson = File.ReadAllText("./datos/personas.json");
+            string personasJson = File.ReadAllText(ruta);
             preguntas = JsonConvert.DeserializeObject<ObservableCollection<Preguntas>>(personasJson);
 
             return preguntas;

@@ -33,17 +33,32 @@ namespace Juego_de_preguntas
 
         private void Examinar_Button(object sender, RoutedEventArgs e)
         {
-            vm.Examinar(imagenUrl_TextBox);
+            vm.Examinar();
         }
 
         private void AñadePregunta_Button(object sender, RoutedEventArgs e)
         {
-            vm.AñadePregunta(imagenUrl_TextBox.Text);
+            vm.AñadePregunta();
         }
 
         private void LimpiarFormulario_Button(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void CargarJSON_Button(object sender, RoutedEventArgs e)
+        {
+            vm.CargarJSON();
+        }
+
+        private void GuardarEnJSON_Button(object sender, RoutedEventArgs e)
+        {
+            vm.GuardarEnJSON();
+        }
+
+        private void EliminarPregunta_Button(object sender, RoutedEventArgs e)
+        {
+            vm.EliminarPregunta();
         }
     }
 }

@@ -15,6 +15,8 @@ namespace Juego_de_preguntas.VistasModelo
     class MainWindowVM : ObservableObject
     {
         private ServicioAzureBlobStorage servicioAzure;
+        private ServicioJSON servicioJSON;
+        private ServicioDialogos servicioDialogos;
 
         private ObservableCollection<Preguntas> preguntas;
         public ObservableCollection<Preguntas> Preguntas
@@ -53,6 +55,8 @@ namespace Juego_de_preguntas.VistasModelo
         public MainWindowVM() 
         {
             // Inicialización
+            servicioDialogos = new ServicioDialogos();
+            servicioJSON = new ServicioJSON();
             preguntas = new ObservableCollection<Preguntas>();
             servicioAzure = new ServicioAzureBlobStorage();
             dificultades = new ObservableCollection<String>();
@@ -72,20 +76,28 @@ namespace Juego_de_preguntas.VistasModelo
             categorias.Add("Científicos");
         }
 
-        public void Examinar(TextBox textBoxURL)
+        public void Examinar()
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            if (openFileDialog.ShowDialog() == true)
-            {
-                textBoxURL.Text = servicioAzure.GuardarImagenEnAzure(openFileDialog.FileName);
-            }
+            NuevaPregunta.Imagen = servicioAzure.GuardarImagenEnAzure(servicioDialogos.AbrirDialogo());
         }
 
-        public void AñadePregunta(string url)
+        public void AñadePregunta()
         {
-            nuevaPregunta.Imagen = url;
-            preguntas.Add(nuevaPregunta);
-            nuevaPregunta = new Preguntas();
+            Preguntas.Add(nuevaPregunta);
+            NuevaPregunta = new Preguntas();
+        }
+        public void CargarJSON()
+        {
+            Preguntas = servicioJSON.CargarPreguntasDeJSON(servicioDialogos.AbrirDialogo());
+        }
+
+        public void GuardarEnJSON()
+        {
+            servicioJSON.GuardarPreguntasEnJSON(Preguntas, servicioDialogos.GuardarDialogo());
+        }
+        public void EliminarPregunta()
+        {
+            Preguntas.Remove(PreguntaActual);
         }
     }
 }
