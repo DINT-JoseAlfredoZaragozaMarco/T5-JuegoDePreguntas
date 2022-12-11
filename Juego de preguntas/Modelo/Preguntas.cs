@@ -59,5 +59,10 @@ namespace Juego_de_preguntas.Modelo
             this.Dificultad = dificultad;
             this.Categoria = categoria;
         }
+
+        public override string ToString()
+        {
+            return $"{Pregunta} {Respuesta} {Imagen} {Dificultad}";
+        }
     }
 }

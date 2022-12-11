@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 
@@ -52,16 +53,52 @@ namespace Juego_de_preguntas.VistasModelo
             set { SetProperty(ref preguntaActual, value); }
         }
 
+        private ObservableCollection<Preguntas> preguntasPartida;
+
+        public ObservableCollection<Preguntas> PreguntasPartida
+        {
+            get { return preguntasPartida; }
+            set { SetProperty(ref preguntasPartida, value); }
+        }
+
+        private int dificultadSeleccionada;
+
+        public int DificultadSeleccionada
+        {
+            get { return dificultadSeleccionada; }
+            set { SetProperty(ref dificultadSeleccionada, value); }
+        }
+
+        private Preguntas preguntaAJugar;
+
+        public Preguntas PreguntaAJugar
+        {
+            get { return preguntaAJugar; }
+            set { SetProperty(ref preguntaAJugar, value); }
+        }
+        private int posicionPreguntasAJugar;
+        private string respuestaIntroducida;
+
+        public string RespuestaIntroducida
+        {
+            get { return respuestaIntroducida; }
+            set { SetProperty(ref respuestaIntroducida, value); }
+        }
+
+
         public MainWindowVM() 
         {
             // Inicialización
+            preguntasPartida = new ObservableCollection<Preguntas>();
             servicioDialogos = new ServicioDialogos();
             servicioJSON = new ServicioJSON();
             preguntas = new ObservableCollection<Preguntas>();
             servicioAzure = new ServicioAzureBlobStorage();
-            dificultades = new ObservableCollection<String>();
-            categorias = new ObservableCollection<String>();
+            dificultades = new ObservableCollection<string>();
+            categorias = new ObservableCollection<string>();
             nuevaPregunta = new Preguntas();
+            preguntaAJugar = new Preguntas();
+            posicionPreguntasAJugar = 0;
 
             // Añadimos dificultades a la lista de dificultades
             dificultades.Add("Fácil");
@@ -70,10 +107,10 @@ namespace Juego_de_preguntas.VistasModelo
             dificultades.Add("Imposible");
 
             // Añadimos categorias a la lista de categorias
-            categorias.Add("Clase-D");
-            categorias.Add("SCP's");
-            categorias.Add("Guardias de la instalación");
-            categorias.Add("Científicos");
+            categorias.Add("Fútbol");
+            categorias.Add("SCP");
+            categorias.Add("Películas");
+            categorias.Add("Marvel");
         }
 
         public void Examinar()
@@ -98,6 +135,46 @@ namespace Juego_de_preguntas.VistasModelo
         public void EliminarPregunta()
         {
             Preguntas.Remove(PreguntaActual);
+        }
+
+        public void NuevaPartida()
+        {
+            PreguntasPartida = new ObservableCollection<Preguntas>();
+            posicionPreguntasAJugar = 0;
+            if (Preguntas.Count > 0)
+            {
+                for (int i = 0; i < Categorias.Count; i++)
+                {
+                    for (int j = 0; j < Preguntas.Count; j++)
+                    {
+                        if (Preguntas[j].Dificultad == Dificultades[DificultadSeleccionada] && Preguntas[j].Categoria == Categorias[i] && !PreguntasPartida.Contains(Preguntas[j]))
+                        {
+                            PreguntasPartida.Add(Preguntas[j]);
+                        }
+                    }
+                }
+                PreguntaAJugar = PreguntasPartida[posicionPreguntasAJugar];
+            } else
+            {
+                MessageBox.Show("¡No has cargado tu lista de preguntas!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        public void Validar()
+        {
+            if (RespuestaIntroducida.Equals(PreguntaAJugar.Respuesta))
+            {
+                if (posicionPreguntasAJugar < PreguntasPartida.Count-1)
+                {
+                    posicionPreguntasAJugar++;
+                    PreguntaAJugar = PreguntasPartida[posicionPreguntasAJugar];
+                    RespuestaIntroducida = "";
+                }
+                else
+                {
+                    MessageBox.Show("¡Has completado todas las preguntas!", "¡Enhorabuena!", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                }
+            }
         }
     }
 }

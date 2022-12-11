@@ -3,15 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Juego_de_preguntas"
+        xmlns:local="clr-namespace:Juego_de_preguntas" xmlns:Convertidores="clr-namespace:Juego_de_preguntas.Convertidores"
         mc:Ignorable="d"
         Icon="assets/questions.png"
         Title="Juego de preguntas" Height="550" Width="900">
     <Window.Resources>
+        <Convertidores:ConvertidorRespuesta x:Key="ConvertidorRespuesta"></Convertidores:ConvertidorRespuesta>
         <DataTemplate x:Key="ListaPreguntas">
-            <StackPanel Margin="10" Orientation="Vertical">
-                <Image Source="{Binding Path=Imagen}" Width="80" Height="80" Stretch="UniformToFill"></Image>
-                <TextBlock Text="{Binding Path=Pregunta}" HorizontalAlignment="Center"></TextBlock>
+            <StackPanel Margin="10" Orientation="Vertical" Width="200">
+                <Image Source="{Binding Path=Imagen}" Width="100" Height="100" Stretch="UniformToFill"></Image>
+                <TextBlock Text="{Binding Path=Pregunta}" HorizontalAlignment="Center" TextTrimming="WordEllipsis"></TextBlock>
             </StackPanel>
         </DataTemplate>
     </Window.Resources>
@@ -31,8 +32,10 @@
                         </GroupBox>
                         <TextBlock Margin="10,0,0,0">Dificultad</TextBlock>
                         <StackPanel Orientation="Horizontal">
-                            <Slider Width="150" VerticalAlignment="Center" Margin="10"></Slider>
-                            <Button Margin="10" Width="100">Nueva Partida</Button>
+                            <Slider Width="150" VerticalAlignment="Center" Margin="10" 
+                                    Maximum="3" TickPlacement="BottomRight"
+                                    IsSnapToTickEnabled="True" Value="{Binding Path=DificultadSeleccionada}"></Slider>
+                            <Button Margin="10" Width="100" Click="NuevaPartida_Button">Nueva Partida</Button>
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Orientation="Vertical">
@@ -41,18 +44,18 @@
                             <TextBlock HorizontalAlignment="Center">Categoría</TextBlock>
                         </StackPanel>
                         <WrapPanel>
-                            <Border BorderThickness="1" BorderBrush="Black" CornerRadius="3" Margin="20,10,0,0">
-                                <Image Source="assets/questions.png" Width="200" HorizontalAlignment="Left"></Image>
+                            <Border BorderThickness="1" BorderBrush="Black" CornerRadius="3" Margin="20,10,0,0" Height="200">
+                                <Image Source="{Binding Path=PreguntaAJugar.Imagen}" Width="200" HorizontalAlignment="Left"></Image>
                             </Border>
                         </WrapPanel>
-                        <TextBlock Text="¿Texto de la pregunta?" Margin="10"/>
+                        <TextBlock Text="{Binding Path=PreguntaAJugar.Pregunta}" Margin="10"/>
                         <TextBlock Text="Respuesta" Margin="10,0,0,0"/>
                         <StackPanel Orientation="Horizontal" Margin="10">
-                            <TextBox Width="300"></TextBox>
-                            <Button Margin="20,0,0,0" Width="80">Validar</Button>
+                            <TextBox Width="300" Text="{Binding Path=RespuestaIntroducida}"></TextBox>
+                            <Button Margin="20,0,0,0" Width="80" Click="Validar_Button">Validar</Button>
                         </StackPanel>
                         <Expander Margin="10" Header="Ver pista / Ocultar pista">
-                            <TextBlock TextWrapping="Wrap" FontSize="18"></TextBlock>
+                            <TextBlock TextWrapping="Wrap" FontSize="18" Text="{Binding Path=PreguntaAJugar.Respuesta, Converter={StaticResource ConvertidorRespuesta}}"></TextBlock>
                         </Expander>
                     </StackPanel>
                 </DockPanel>

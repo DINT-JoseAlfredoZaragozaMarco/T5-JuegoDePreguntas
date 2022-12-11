@@ -60,5 +60,15 @@ namespace Juego_de_preguntas
         {
             vm.EliminarPregunta();
         }
+
+        private void NuevaPartida_Button(object sender, RoutedEventArgs e)
+        {
+            vm.NuevaPartida();
+        }
+
+        private void Validar_Button(object sender, RoutedEventArgs e)
+        {
+            vm.Validar();
+        }
     }
 }
