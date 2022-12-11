@@ -15,6 +15,22 @@
                 <TextBlock Text="{Binding Path=Pregunta}" HorizontalAlignment="Center" TextTrimming="WordEllipsis"></TextBlock>
             </StackPanel>
         </DataTemplate>
+        <Style TargetType="{x:Type Image}" x:Key="imagenTrigger">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=PreguntaAJugar.Categoria}" Value="Fútbol">
+                    <Setter Property="Source" Value="assets/futbol.jpg"></Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=PreguntaAJugar.Categoria}" Value="SCP">
+                    <Setter Property="Source" Value="assets/scp.png"></Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=PreguntaAJugar.Categoria}" Value="Películas">
+                    <Setter Property="Source" Value="assets/cine.jpg"></Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=PreguntaAJugar.Categoria}" Value="Marvel">
+                    <Setter Property="Source" Value="assets/marvel.jpg"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
     
     <Grid>
@@ -24,10 +40,10 @@
                     <StackPanel DockPanel.Dock="Right" Width="300" Background="#0099BA">
                         <GroupBox Header="Categorías conseguidas" Margin="10" HorizontalAlignment="Center">
                             <WrapPanel>
-                                <Image Source="assets/questions.png" Width="100" Margin="5"></Image>
-                                <Image Source="assets/questions.png" Width="100" Margin="5"></Image>
-                                <Image Source="assets/questions.png" Width="100" Margin="5"></Image>
-                                <Image Source="assets/questions.png" Width="100" Margin="5"></Image>
+                                <Image Source="assets/futbol.jpg" Width="100" Margin="5"></Image>
+                                <Image Source="assets/scp.png" Width="100" Margin="5"></Image>
+                                <Image Source="assets/cine.jpg" Width="100" Margin="5"></Image>
+                                <Image Source="assets/marvel.jpg" Width="100" Margin="5"></Image>
                             </WrapPanel>
                         </GroupBox>
                         <TextBlock Margin="10,0,0,0">Dificultad</TextBlock>
@@ -40,7 +56,7 @@
                     </StackPanel>
                     <StackPanel Orientation="Vertical">
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
-                            <Image Source="assets/questions.png" Width="80" Margin="5" HorizontalAlignment="Center"></Image>
+                            <Image Width="80" Margin="5" HorizontalAlignment="Center" Style="{StaticResource imagenTrigger}" Name="Categoria"></Image>
                             <TextBlock HorizontalAlignment="Center">Categoría</TextBlock>
                         </StackPanel>
                         <WrapPanel>

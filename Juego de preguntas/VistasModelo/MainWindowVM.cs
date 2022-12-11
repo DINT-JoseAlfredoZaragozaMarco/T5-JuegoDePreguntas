@@ -4,6 +4,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ using System.Windows.Data;
 
 namespace Juego_de_preguntas.VistasModelo
 {
-    class MainWindowVM : ObservableObject
+    class MainWindowVM : ObservableObject, INotifyCollectionChanged
     {
         private ServicioAzureBlobStorage servicioAzure;
         private ServicioJSON servicioJSON;
@@ -78,6 +79,8 @@ namespace Juego_de_preguntas.VistasModelo
         }
         private int posicionPreguntasAJugar;
         private string respuestaIntroducida;
+
+        public event NotifyCollectionChangedEventHandler CollectionChanged;
 
         public string RespuestaIntroducida
         {
