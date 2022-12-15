@@ -31,13 +31,40 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+        <ControlTemplate x:Key="BotonTemplate" TargetType="{x:Type Button}">
+            <Border x:Name="border" BorderBrush="#0099BA" BorderThickness="2" Background="AliceBlue" SnapsToDevicePixels="True" CornerRadius="5">
+                <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="10" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsDefaulted" Value="True">
+                    <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" TargetName="border" Value="#FFBEE6FD"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FF3C7FB1"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" TargetName="border" Value="#FFC4E5F6"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FF2C628B"/>
+                </Trigger>
+                <Trigger Property="ToggleButton.IsChecked" Value="True">
+                    <Setter Property="Background" TargetName="border" Value="#FFBCDDEE"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FF245A83"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" TargetName="border" Value="#FFF4F4F4"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FFADB2B5"/>
+                    <Setter Property="Foreground" Value="#FF838383"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
     </Window.Resources>
-    
+
     <Grid>
         <TabControl>
             <TabItem Header="Jugar" IsSelected="True">
-                <DockPanel>
-                    <StackPanel DockPanel.Dock="Right" Width="300" Background="#0099BA">
+                <DockPanel Background="#1e1e1e">
+                    <StackPanel DockPanel.Dock="Right" Width="300" Background="#1e1e1e">
                         <GroupBox Header="Categorías conseguidas" Margin="10" HorizontalAlignment="Center">
                             <WrapPanel>
                                 <Image Source="assets/futbol.jpg" Width="100" Margin="5"></Image>
@@ -51,7 +78,7 @@
                             <Slider Width="150" VerticalAlignment="Center" Margin="10" 
                                     Maximum="3" TickPlacement="BottomRight"
                                     IsSnapToTickEnabled="True" Value="{Binding Path=DificultadSeleccionada}"></Slider>
-                            <Button Margin="10" Width="100" Click="NuevaPartida_Button">Nueva Partida</Button>
+                            <Button Margin="10" Width="100" Click="NuevaPartida_Button" Template="{StaticResource BotonTemplate}">Nueva Partida</Button>
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Orientation="Vertical">
@@ -60,7 +87,7 @@
                             <TextBlock HorizontalAlignment="Center">Categoría</TextBlock>
                         </StackPanel>
                         <WrapPanel>
-                            <Border BorderThickness="1" BorderBrush="Black" CornerRadius="3" Margin="20,10,0,0" Height="200">
+                            <Border BorderThickness="1" BorderBrush="Black" CornerRadius="3" Margin="20,10,0,0" Height="200" Background="#38403c">
                                 <Image Source="{Binding Path=PreguntaAJugar.Imagen}" Width="200" HorizontalAlignment="Left"></Image>
                             </Border>
                         </WrapPanel>
@@ -78,16 +105,16 @@
             </TabItem>
             <TabItem Header="Añadir pregunta">
                 <DockPanel>
-                    <DockPanel DockPanel.Dock="Right" Margin="10" Background="#0099BA">
+                    <DockPanel DockPanel.Dock="Right" Margin="10" Background="#1e1e1e">
                         <StackPanel DockPanel.Dock="Top">
-                            <Button Margin="10" Width="150" Click="AñadePregunta_Button">Añadir pregunta</Button>
-                            <Button Margin="10" Width="150" Click="LimpiarFormulario_Button">Limpiar formulario</Button>
+                            <Button Margin="10" Width="150" Click="AñadePregunta_Button" Template="{StaticResource BotonTemplate}">Añadir pregunta</Button>
+                            <Button Margin="10" Width="150" Click="LimpiarFormulario_Button" Template="{StaticResource BotonTemplate}">Limpiar formulario</Button>
                         </StackPanel>
-                        <Button Margin="10" Width="150" VerticalAlignment="Bottom" Click="Examinar_Button">Examinar</Button>
+                        <Button Margin="10" Width="150" VerticalAlignment="Bottom" Click="Examinar_Button" Template="{StaticResource BotonTemplate}">Examinar</Button>
                     </DockPanel>
                     <StackPanel Orientation="Vertical">
                         <WrapPanel HorizontalAlignment="Center">
-                            <Border BorderThickness="1" BorderBrush="Black" CornerRadius="3" Margin="20,10,0,0" Height="300">
+                            <Border BorderThickness="1" BorderBrush="Black" CornerRadius="3" Margin="20,10,0,0" Height="300" Background="#38403c">
                                 <Image Source="{Binding Path=Text, ElementName=imagenUrl_TextBox}" Width="300"></Image>
                             </Border>
                         </WrapPanel>
@@ -118,19 +145,19 @@
             </TabItem>
             <TabItem Header="Gestionar preguntas">
                 <DockPanel>
-                    <DockPanel DockPanel.Dock="Right" Margin="10" Background="#0099BA">
+                    <DockPanel DockPanel.Dock="Right" Margin="10" Background="#1e1e1e">
                         <StackPanel DockPanel.Dock="Top">
-                            <Button Margin="10" Width="150" Click="CargarJSON_Button">Cargar de JSON</Button>
-                            <Button Margin="10" Width="150" Click="GuardarEnJSON_Button">Guardar en JSON</Button>
-                            <Button Margin="10" Width="150" Click="EliminarPregunta_Button">Eliminar pregunta</Button>
+                            <Button Margin="10" Width="150" Click="CargarJSON_Button" Template="{StaticResource BotonTemplate}">Cargar de JSON</Button>
+                            <Button Margin="10" Width="150" Click="GuardarEnJSON_Button" Template="{StaticResource BotonTemplate}">Guardar en JSON</Button>
+                            <Button Margin="10" Width="150" Click="EliminarPregunta_Button" Template="{StaticResource BotonTemplate}">Eliminar pregunta</Button>
                         </StackPanel>
-                        <Button Margin="10" Width="150" VerticalAlignment="Bottom" Click="Examinar_Button">Examinar</Button>
+                        <Button Margin="10" Width="150" VerticalAlignment="Bottom" Click="Examinar_Button" Template="{StaticResource BotonTemplate}">Examinar</Button>
                     </DockPanel>
                     <StackPanel>
                         <Border Margin="10" BorderBrush="Black" BorderThickness="1">
                             <ListBox ItemTemplate="{StaticResource ListaPreguntas}" ItemsSource="{Binding Path=Preguntas}" 
                                      SelectedItem="{Binding Path=PreguntaActual}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
-                                     ScrollViewer.VerticalScrollBarVisibility="Auto" Height="300">
+                                     ScrollViewer.VerticalScrollBarVisibility="Auto" Height="300" Background="#38403c">
                                 <ListBox.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <WrapPanel></WrapPanel>
