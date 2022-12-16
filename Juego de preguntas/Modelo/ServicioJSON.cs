@@ -21,7 +21,7 @@ namespace Juego_de_preguntas.Modelo
         {
             ObservableCollection<Preguntas> preguntas = new ObservableCollection<Preguntas>();
 
-            string personasJson = File.ReadAllText(ruta);
+             string personasJson = File.ReadAllText(ruta);
             preguntas = JsonConvert.DeserializeObject<ObservableCollection<Preguntas>>(personasJson);
 
             return preguntas;
