@@ -154,6 +154,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Convertidores\ConvertidorRespuesta.cs" />
+    <Compile Include="Modelo\Partida.cs" />
     <Compile Include="Modelo\ServicioAzureBlobStorage.cs" />
     <Compile Include="Modelo\ServicioDialogos.cs" />
     <Compile Include="Modelo\ServicioJSON.cs" />

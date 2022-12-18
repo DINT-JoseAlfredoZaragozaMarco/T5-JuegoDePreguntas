@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Juego_de_preguntas.Modelo
 {
@@ -13,18 +14,30 @@ namespace Juego_de_preguntas.Modelo
     {
         public void GuardarPreguntasEnJSON(ObservableCollection<Preguntas> preguntas, string ruta)
         {
-            string personasJson = JsonConvert.SerializeObject(preguntas);
-            File.WriteAllText(ruta, personasJson);
+            if(ruta != null)
+            {
+                string personasJson = JsonConvert.SerializeObject(preguntas);
+                File.WriteAllText(ruta, personasJson);
+                MessageBox.Show("Preguntas guardadas correctamente", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            
         }
 
         public ObservableCollection<Preguntas> CargarPreguntasDeJSON(string ruta)
         {
             ObservableCollection<Preguntas> preguntas = new ObservableCollection<Preguntas>();
 
-             string personasJson = File.ReadAllText(ruta);
-            preguntas = JsonConvert.DeserializeObject<ObservableCollection<Preguntas>>(personasJson);
-
-            return preguntas;
+            if (ruta != null)
+            {
+                string personasJson = File.ReadAllText(ruta);
+                preguntas = JsonConvert.DeserializeObject<ObservableCollection<Preguntas>>(personasJson);
+                MessageBox.Show("Preguntas cargadas correctamente", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                return preguntas;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

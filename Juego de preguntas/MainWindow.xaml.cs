@@ -43,7 +43,7 @@ namespace Juego_de_preguntas
 
         private void LimpiarFormulario_Button(object sender, RoutedEventArgs e)
         {
-
+            vm.LimpiarFormulario();
         }
 
         private void CargarJSON_Button(object sender, RoutedEventArgs e)

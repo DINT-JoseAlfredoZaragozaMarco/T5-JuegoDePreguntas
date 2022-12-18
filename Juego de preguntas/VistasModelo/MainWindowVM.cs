@@ -70,6 +70,15 @@ namespace Juego_de_preguntas.VistasModelo
             set { SetProperty(ref dificultadSeleccionada, value); }
         }
 
+        private Partida partida;
+
+        public Partida Partida
+        {
+            get { return partida; }
+            set { partida = value; }
+        }
+
+
         private Preguntas preguntaAJugar;
 
         public Preguntas PreguntaAJugar
@@ -88,6 +97,38 @@ namespace Juego_de_preguntas.VistasModelo
             set { SetProperty(ref respuestaIntroducida, value); }
         }
 
+        private double categoriaFutbol;
+
+        public double CategoriaFutbol
+        {
+            get { return categoriaFutbol; }
+            set { SetProperty(ref categoriaFutbol, value); }
+        }
+
+        private double categoriaSCP;
+
+        public double CategoriaSCP
+        {
+            get { return categoriaSCP; }
+            set { SetProperty(ref categoriaSCP, value); }
+        }
+
+        private double categoriaCine;
+
+        public double CategoriaCine
+        {
+            get { return categoriaCine; }
+            set { SetProperty(ref categoriaCine, value); }
+        }
+
+        private double categoriaMarvel;
+
+        public double CategoriaMarvel
+        {
+            get { return categoriaMarvel; }
+            set { SetProperty(ref categoriaMarvel, value); }
+        }
+
 
         public MainWindowVM() 
         {
@@ -102,6 +143,12 @@ namespace Juego_de_preguntas.VistasModelo
             nuevaPregunta = new Preguntas();
             preguntaAJugar = new Preguntas();
             posicionPreguntasAJugar = 0;
+            Partida = new Partida();
+
+            CategoriaCine = 0.5;
+            CategoriaFutbol = 0.5;
+            CategoriaMarvel = 0.5;
+            CategoriaSCP = 0.5;
 
             // Añadimos dificultades a la lista de dificultades
             dificultades.Add("Fácil");
@@ -123,8 +170,14 @@ namespace Juego_de_preguntas.VistasModelo
 
         public void AñadePregunta()
         {
-            Preguntas.Add(nuevaPregunta);
-            NuevaPregunta = new Preguntas();
+            if (NuevaPregunta.Pregunta != null && NuevaPregunta.Respuesta != null && 
+                NuevaPregunta.Dificultad != null && NuevaPregunta.Categoria != null && 
+                NuevaPregunta.Imagen != null)
+            {
+                Preguntas.Add(NuevaPregunta);
+                NuevaPregunta = new Preguntas();
+                MessageBox.Show("Pregunta añadida correctamente", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
         public void CargarJSON()
         {
@@ -138,19 +191,19 @@ namespace Juego_de_preguntas.VistasModelo
         public void EliminarPregunta()
         {
             Preguntas.Remove(PreguntaActual);
+            MessageBox.Show("Pregunta eliminada correctamente", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         public void NuevaPartida()
         {
-            PreguntasPartida = new ObservableCollection<Preguntas>();
-            posicionPreguntasAJugar = 0;
+            ResetearValores();
             if (Preguntas.Count > 0)
             {
                 for (int i = 0; i < Categorias.Count; i++)
                 {
                     for (int j = 0; j < Preguntas.Count; j++)
                     {
-                        if (Preguntas[j].Dificultad == Dificultades[DificultadSeleccionada] && Preguntas[j].Categoria == Categorias[i] && !PreguntasPartida.Contains(Preguntas[j]))
+                        if (Preguntas[j].Dificultad == Partida.Dificultad && Preguntas[j].Categoria == Categorias[i] && !PreguntasPartida.Contains(Preguntas[j]))
                         {
                             PreguntasPartida.Add(Preguntas[j]);
                         }
@@ -167,6 +220,7 @@ namespace Juego_de_preguntas.VistasModelo
         {
             if (RespuestaIntroducida.Equals(PreguntaAJugar.Respuesta))
             {
+                ValidaCategoria();
                 if (posicionPreguntasAJugar < PreguntasPartida.Count-1)
                 {
                     posicionPreguntasAJugar++;
@@ -176,8 +230,48 @@ namespace Juego_de_preguntas.VistasModelo
                 else
                 {
                     MessageBox.Show("¡Has completado todas las preguntas!", "¡Enhorabuena!", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                    Partida.Empezada = true;
                 }
             }
+        }
+
+        public void ValidaCategoria()
+        {
+            if (PreguntasPartida[posicionPreguntasAJugar].Categoria == "Fútbol")
+            {
+                CategoriaFutbol = 1;
+            }
+            else if (PreguntasPartida[posicionPreguntasAJugar].Categoria == "SCP")
+            {
+                CategoriaSCP = 1;
+            }
+            else if (PreguntasPartida[posicionPreguntasAJugar].Categoria == "Películas")
+            {
+                CategoriaCine = 1;
+            }
+            else
+            {
+                CategoriaMarvel = 1;
+            }
+        }
+
+        public void ResetearValores()
+        {
+            RespuestaIntroducida = "";
+            PreguntasPartida = new ObservableCollection<Preguntas>();
+            posicionPreguntasAJugar = 0;
+            Partida.Dificultad = Dificultades[DificultadSeleccionada];
+            Partida.Empezada = false;
+
+            CategoriaCine = 0.5;
+            CategoriaFutbol = 0.5;
+            CategoriaSCP = 0.5;
+            CategoriaMarvel = 0.5;
+        }
+
+        public void LimpiarFormulario()
+        {
+            NuevaPregunta = null;
         }
     }
 }
